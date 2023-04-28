@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ContentfulManagement": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
