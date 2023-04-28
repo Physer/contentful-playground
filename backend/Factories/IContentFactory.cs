@@ -3,8 +3,8 @@ using ContentfulManagement.ContentTypes;
 
 namespace ContentfulManagement.Factories;
 
-public interface IContentTypeFactory<T> where T : BaseType
+public interface IContentFactory<T> where T : BaseType
 {
     string ContentTypeId { get; }
-    ContentType CreateContentType();
+    IEnumerable<T> CreateContentItems(int count);
 }

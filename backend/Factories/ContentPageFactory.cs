@@ -1,17 +1,34 @@
-﻿using Contentful.Core.Models;
+﻿using AutoBogus;
+using Contentful.Core.Models;
 using ContentfulManagement.ContentTypes;
 
 namespace ContentfulManagement.Factories;
 
-public class ContentPageFactory : IContentTypeFactory<BaseType>
+public class ContentPageFactory : IContentTypeFactory<BaseType>, IContentFactory<BaseType>
 {
+    public string ContentTypeId => "content-page";
+
+    public IEnumerable<BaseType> CreateContentItems(int count)
+    {
+        var generatedContentPages = AutoFaker.Generate<ContentPage>(count);
+        foreach (var contentPage in generatedContentPages)
+        {
+            yield return new ContentPage
+            {
+                Content = contentPage.Content,
+                Description = contentPage.Description,
+                Title = contentPage.Title,
+            };
+        }
+    }
+
     public ContentType CreateContentType()
     {
         return new ContentType
         {
             SystemProperties = new()
             {
-                Id = Guid.NewGuid().ToString()
+                Id = "content-page"
             },
             Description = "A content page",
             Name = "Content page",
@@ -27,7 +44,7 @@ public class ContentPageFactory : IContentTypeFactory<BaseType>
                 {
                     Name = nameof(ContentPage.Content),
                     Id = nameof(ContentPage.Content).ToLower(),
-                    Type = "RichText"
+                    Type = "Text"
                 },
                 new()
                 {

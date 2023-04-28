@@ -11,7 +11,10 @@ using static System.Console;
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        // Factories
+        // Content factories
+        services.AddSingleton<IContentFactory<BaseType>, ContentPageFactory>();
+
+        // Content Type factories
         services.AddSingleton<IContentTypeFactory<BaseType>, ContentPageFactory>();
 
         // Clients
@@ -42,6 +45,7 @@ switch (numericInput)
 {
     case 1:
         WriteLine("Generating content...");
+        await contentClient.GenerateContentItemsAsync();
         break;
     case 2:
         WriteLine("Delete all content...");
